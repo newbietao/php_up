@@ -78,10 +78,30 @@
 	test5();
 	echo $a;
 	echo "</br>";
-
-
-
-
+	// 函数的引用传值
+	$n = 12;
+	function test6($n) {
+		$n += 12;
+	}
+	test6($n);
+	echo $n . "</br>";
+	function test7(&$n) {
+		$n += 12;
+	}
+	test7($n);
+	echo $n . "</br>";
+	
+	// 可变变量
+	function haha() {
+		echo "haha</br>";
+	}
+	function kaka() {
+		echo "kaka</br>";
+	}
+	$fun = "kaka";
+	$fun();
+	$fun = "haha";
+	$fun();
 
 
 
