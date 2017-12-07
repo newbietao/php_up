@@ -102,8 +102,34 @@
 	$fun();
 	$fun = "haha";
 	$fun();
-
-
+	// 回调函数的使用
+	function callback() {
+		echo "回调函数执行</br>";
+	}
+	function run($fun) {
+		$fun();
+	}
+	run("callback");
+	run(function(){
+		echo "回调函数又被执行</br>";
+	});
+	// 匿名函数
+	$fun1 = function() {
+		echo "我是一个匿名函数</br>";
+	};
+	$fun1();
+	echo "<hr>";	
+	// 递归函数
+	function recursion($n) {
+		echo $n . "</br>";
+		if($n > 1){
+			$fun = __FUNCTION__;
+			$fun($n-1); 
+		}
+		echo $n . "</br>";
+	}
+	echo recursion(10);
+	echo "</br>";
 
 
 
