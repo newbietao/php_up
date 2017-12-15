@@ -32,7 +32,7 @@ hello;
 	echo $str7."\n";
 	$str8 = "hello {$name}I'm Tom";
 	echo $str8 . "\n";
-
+	
 
 
 
