@@ -20,8 +20,18 @@
 	// 同样双引号里面也可放双引号
 	$str5 = "I'm \"hantao\"";
     echo $str5 . "\n";
-
-
+	// heredoc类型字符串
+	$str6 = <<<hello
+		hello world
+		I'm a boy
+hello;
+	echo $str6 . "\n";
+	// 变量插值
+	$name = "hantao";
+	$str7 = "hello $name";
+	echo $str7."\n";
+	$str8 = "hello {$name}I'm Tom";
+	echo $str8 . "\n";
 
 
 
