@@ -13,6 +13,28 @@
 	echo substr_replace($str,"",6,5)."\n";
 	// 插入
 	echo substr_replace($str,"hantao",6,0)."\n";
+	
+
+	// 反转字符串
+	echo strrev($str)."\n";
+	// 重复字符串
+	echo  str_repeat($str,2)."\n";
+	// 填充字符串
+	echo str_pad($str,16,"*")."\n";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
