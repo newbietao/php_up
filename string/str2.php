@@ -12,5 +12,25 @@
 	echo trim($str)."\n";
 	echo ltrim($str)."\n";
 	echo rtrim($str)."\n";
+	
+
+	// 改变大小写
+	$str = "hello";
+	echo strtoupper($str)."\n";
+	$str = "WORLD";
+	echo strtolower($str)."\n";
+	// 字符串首字母大小
+	$str = "hello world";
+	echo ucfirst($str)."\n";
+	echo ucwords($str)."\n";
+
+
+
+
+
+
+
+
+
 
 ?>
