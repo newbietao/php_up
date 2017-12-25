@@ -29,6 +29,15 @@
 	$url = "https://www.google.com.hk/search?q=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&oq=cai&aqs=chrome.1.69i57j0l5.2271j0j7&sourceid=chrome&ie=UTF-8";
 	echo urlencode($url)."\n";
 	echo urldecode($url)."\n";
+	
+
+	// html 相关函数
+
+	// 将html标签转成实体
+	$html = "<div>hello world</div>";
+	echo htmlentities($html)."\n";
+	// 删除html标签
+	echo strip_tags($html)."\n";
 
 
 
