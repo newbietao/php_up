@@ -13,11 +13,17 @@ class Curl {
 		$this->url = $url;
 		$this->data = $data;
 		$this->curl = curl_init();//初始化curl
+		curl_setopt($this->curl, CURLOPT_URL, $url);
 		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
 	}
-	public function curl_reset($key,$value) {
-		
-		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+	public function curl_set($option) {
+		if(is_array($option)){
+			foreach($option as $key => $value){
+				curl_setopt($this->curl, constant($key), $value);
+			}
+		}else{
+			exit('option master be a array');
+		}
 	}
 	public function get() {
 	
@@ -45,7 +51,11 @@ class Curl {
 	}
 }
 
-
+$t = new Curl("http://www.baidu.com");
+$t->curl_set(array(
+	"CURLOPT_URL" => "http://www.cnblogs.com/freephp/p/5283239.html"
+));
+echo $t -> get();
 
 
 
