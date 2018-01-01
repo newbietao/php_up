@@ -10,12 +10,23 @@ class Curl {
 	private $data = "";
 	private $curl = "";
 	public function __construct($url, $data = array()) {
-		$this->url = $url;
-		$this->data = $data;
-		$this->curl = curl_init();//初始化curl
-		curl_setopt($this->curl, CURLOPT_URL, $url);
-		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+		$this->init($url, $data = array());
 	}
+
+	public function init($url, $data = array()) {
+		$this->url = $url;
+	    $this->data = $data;
+	    $this->curl = curl_init();//初始化curl
+		$arr = parse_url($url);
+		if($arr["scheme"] == "https"){
+			date_default_timezone_set('PRC'); // 使用Cookie时，必须先设置时区
+			curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE); // 对认证证书来源的检查从证书中检查SSL加密算法是否存在
+			curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, 2); 
+		}
+	    curl_setopt($this->curl, CURLOPT_URL, $url);
+	    curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+	}
+
 	public function curl_set($option) {
 		if(is_array($option)){
 			foreach($option as $key => $value){
@@ -46,8 +57,23 @@ class Curl {
 		curl_setopt($curlobj, CURLOPT_HEADER, FALSE);
 	}
 
-	public function ftp_download() {
-	
+	public function ftp_download($url, $file_name, $user, $passwd, $timeout=300) {
+		curl_setopt($curlobj, CURLOPT_URL, $url);  
+		curl_setopt($curlobj, CURLOPT_HEADER, FALSE); 
+		curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, TRUE);  
+		curl_setopt($curlobj, CURLOPT_TIMEOUT, $timeout); // times out after 300s
+		curl_setopt($curlobj, CURLOPT_USERPWD, $user.":".$passwd);//FTP用户名：密码
+		// Sets up the output file
+		$outfile = fopen($flie_name, 'wb');//保存到本地的文件名
+		curl_setopt($curlobj, CURLOPT_FILE, $outfile);
+			
+		$rtn = curl_exec($curlobj);  
+		fclose($outfile); 
+		if(!curl_errno($curlobj)){
+			return TRUE;  
+		} else {
+			return FALSE;
+		}
 		
 	}
 
@@ -67,9 +93,9 @@ class Curl {
 		fclose($fp); 
 		
 		if(!curl_errno($this->curl)){
-			echo "Uploaded successfully.";  
+			return TRUE;  
 		} else {
-			echo 'Curl error: ' . curl_error($curlobj);
+			return FALSE;
 		}
 	}
 	public function close_curl() {	
@@ -80,10 +106,4 @@ class Curl {
 		
 	}
 }
-
-
-
-
-
-
 ?>
