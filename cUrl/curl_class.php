@@ -20,8 +20,8 @@ class Curl {
 		$arr = parse_url($url);
 		if($arr["scheme"] == "https"){
 			date_default_timezone_set('PRC'); // 使用Cookie时，必须先设置时区
-			curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, FALSE); // 对认证证书来源的检查从证书中检查SSL加密算法是否存在
-			curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, 2); 
+			curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 对认证证书来源的检查从证书中检查SSL加密算法是否存在
+			curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 2); 
 		}
 	    curl_setopt($this->curl, CURLOPT_URL, $url);
 	    curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
@@ -38,6 +38,8 @@ class Curl {
 	}
 
 	public function get() {
+		curl_setopt($this->curl, CURLOPT_POST, FALSE);  
+		curl_setopt($this->curl, CURLOPT_HTTPGET, TRUE);  
 		return curl_exec($this->curl);
 	}
 
@@ -53,23 +55,23 @@ class Curl {
 
 	public function open_cookie() {
 		date_default_timezone_set('PRC'); // 使用Cookie时，必须先设置时区
-		curl_setopt($curlobj, CURLOPT_COOKIESESSION, TRUE); 
-		curl_setopt($curlobj, CURLOPT_HEADER, FALSE);
+		curl_setopt($this->curl, CURLOPT_COOKIESESSION, TRUE); 
+		curl_setopt($this->curl, CURLOPT_HEADER, FALSE);
 	}
 
 	public function ftp_download($url, $file_name, $user, $passwd, $timeout=300) {
-		curl_setopt($curlobj, CURLOPT_URL, $url);  
-		curl_setopt($curlobj, CURLOPT_HEADER, FALSE); 
-		curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, TRUE);  
-		curl_setopt($curlobj, CURLOPT_TIMEOUT, $timeout); // times out after 300s
-		curl_setopt($curlobj, CURLOPT_USERPWD, $user.":".$passwd);//FTP用户名：密码
+		curl_setopt($this->curl, CURLOPT_URL, $url);  
+		curl_setopt($this->curl, CURLOPT_HEADER, FALSE); 
+		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, TRUE);  
+		curl_setopt($this->curl, CURLOPT_TIMEOUT, $timeout); // times out after 300s
+		curl_setopt($this->curl, CURLOPT_USERPWD, $user.":".$passwd);//FTP用户名：密码
 		// Sets up the output file
 		$outfile = fopen($flie_name, 'wb');//保存到本地的文件名
-		curl_setopt($curlobj, CURLOPT_FILE, $outfile);
+		curl_setopt($this->curl, CURLOPT_FILE, $outfile);
 			
-		$rtn = curl_exec($curlobj);  
+		$rtn = curl_exec($this->curl);  
 		fclose($outfile); 
-		if(!curl_errno($curlobj)){
+		if(!curl_errno($this->curl)){
 			return TRUE;  
 		} else {
 			return FALSE;
@@ -104,6 +106,9 @@ class Curl {
 	public function request() {
 	
 		
+	}
+	public function __destruct() {
+		$this->close_curl();
 	}
 }
 ?>
