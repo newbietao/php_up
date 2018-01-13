@@ -3,7 +3,7 @@
 	 * @author hantao newbietao@163.com
 	 * 
 	 */
-	class cookie{
+	class Cookie{
 		private static $object = null;
 		private $expire = 0;
 		private $path = "";
@@ -21,7 +21,7 @@
 		 */
 		private function setOption($option) {
 			if(isset($option['expire']) && !empty($option['expire'])){
-				$this->expire = $option['expire'];
+				$this->expire = (int)$option['expire'];
 			}
 			if(isset($option['path']) && !empty($option['path'])){
 				$this->path = $option['path'];
@@ -52,7 +52,7 @@
 		 *
 		 * @return object self::$object 返回当前类的对象或者是null
 		 */
-		public static function getInstance($option) {
+		public static function getInstance($option = []) {
 			if(is_null(self::$object)){
 				$class = __CLASS__;
 				self::$object = new $class($option);
@@ -60,18 +60,19 @@
 			return self::$object;
 		}
 
-		public function set($name, $vuale，$option = []) {
+		public function set($name, $value, $option = []) {
 			if(is_array($option) && count($option)>0){
 				$this->setOption($option);
 			}
 			if(is_array($value) || is_object($value)){
-				$value = json_decode($vlue);
+				$value = json_encode($vlue);
 			}
 			$this->set_cookie($name,$value);
 		}
 
 		public function get($name) {
-
+			$res = $_COOKIE[$name];
+			return substr($res,0,1) == "{" ? json_decode($res) : $res;
 		}
 
 		public function delete() {
@@ -82,4 +83,8 @@
 
 		}
 	}
+	$cookie = Cookie::getInstance();
+	// var_dump($cookie);
+	// $cookie->set('username',"hantao");
+	echo $cookie->get('username');
 ?>
