@@ -11,7 +11,7 @@
 		private $secure = false;
 		private $httponly = false;
 
-		private function __contruct($option) {
+		private function __construct($option) {
 			$this->setOption($option);
 		}
 		/**
