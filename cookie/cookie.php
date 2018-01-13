@@ -113,11 +113,8 @@
 		}
 	}
 	$cookie = Cookie::getInstance();
-	// var_dump($cookie);
-	$cookie->set('userinfo',['name'=>"hantao",'age'=>23]);
-	// $cookie->delete('username');
-	// var_dump($cookie->get('username'));
-	$cookie->set('test1','haha',['expire'=>time()+3600,'path'=>'/']);
-	$cookie->set('test2','haha1',['expire'=>time()+600,'path'=>'/aa']);
-	$cookie->deleteAll();
+	// $cookie->set('userinfo[name]','hantao');
+	// $cookie->set('userinfo[age]','23');
+	// $cookie->set('userinfo[home]','liaoning');
+	var_dump($_COOKIE);
 ?>
