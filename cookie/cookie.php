@@ -42,7 +42,8 @@
 		 * @param string $name  cookie name
 		 * @param mixed $value cookie value
 		 */
-		private function set_cookie($name,$value) {
+		private function set_cookie($name, $value, $option = []) {
+			$this->setOption($option);
 			setcookie($name,$value,$this->expire,$this->domain,$this->secure,$this->httponly);
 		}
 		/**
@@ -65,26 +66,49 @@
 				$this->setOption($option);
 			}
 			if(is_array($value) || is_object($value)){
-				$value = json_encode($vlue);
+				$value = json_encode($value);
 			}
 			$this->set_cookie($name,$value);
 		}
-
+		/**
+		 * 获取cookie
+		 *
+		 * @param  string $name cookie name
+		 *
+		 * @return mixed 返回null或者是cookie的值
+		 */
 		public function get($name) {
+			if(!isset($_COOKIE[$name])) return null;
+
 			$res = $_COOKIE[$name];
 			return substr($res,0,1) == "{" ? json_decode($res) : $res;
 		}
-
-		public function delete() {
+		/**
+		 * 删除cookie
+		 *
+		 * @param  string $name   cookie name
+		 *
+		 * @return boolean
+		 */
+		public function delete($name) {
+			if(!isset($_COOKIE[$name])) return false;
+			$this->set_cookie($name,"",['expire'=>time()-1]);
+			return true;
 
 		}
 
 		public function deleteAll() {
-
+			foreach ($_COOKIE as $key => $value) {
+				$this->delete($key);
+			}
 		}
 	}
 	$cookie = Cookie::getInstance();
 	// var_dump($cookie);
-	// $cookie->set('username',"hantao");
-	echo $cookie->get('username');
+	$cookie->set('userinfo',['name'=>"hantao",'age'=>23]);
+	// $cookie->delete('username');
+	// var_dump($cookie->get('username'));
+	$cookie->set('test1','haha',['expire'=>time()+3600,'path'=>'/']);
+	$cookie->set('test2','haha1',['expire'=>time()+600,'path'=>'/aa']);
+	$cookie->deleteAll();
 ?>
