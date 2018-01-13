@@ -60,7 +60,13 @@
 			}
 			return self::$object;
 		}
-
+		/**
+		 * 设置cookie
+		 *
+		 * @param string $name   cookie name
+		 * @param mixed $value   cookie value
+		 * @param array  $option 其他选项
+		 */
 		public function set($name, $value, $option = []) {
 			if(is_array($option) && count($option)>0){
 				$this->setOption($option);
@@ -96,7 +102,10 @@
 			return true;
 
 		}
-
+		/**
+		 * 删除全部cookie
+		 *
+		 */
 		public function deleteAll() {
 			foreach ($_COOKIE as $key => $value) {
 				$this->delete($key);
