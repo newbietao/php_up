@@ -2,23 +2,23 @@
 /**
  * @author hantao
  * @date 2018-01-01
- * @为了纪念我苦逼、无聊、单身的2018年元旦
  */
 
 class Curl {
 	private $url = "";
 	private $data = "";
 	private $curl = "";
-	public function __construct($url, $data = array()) {
-		$this->init($url, $data = array());
+
+	private function __construct($url, $data = []) {
+		$this->init($url, $data);
 	}
 
-	public function init($url, $data = array()) {
+	public function init($url, $data = []) {
 		$this->url = $url;
 	    $this->data = $data;
 	    $this->curl = curl_init();//初始化curl
 		$arr = parse_url($url);
-		if($arr["scheme"] == "https"){
+		if(isset($arr['scheme']) && $arr["scheme"] == "https"){
 			date_default_timezone_set('PRC'); // 使用Cookie时，必须先设置时区
 			curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 对认证证书来源的检查从证书中检查SSL加密算法是否存在
 			curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 2); 
@@ -101,14 +101,14 @@ class Curl {
 		}
 	}
 	public function close_curl() {	
-		curl_close($this->curl);			// 关闭cURL
+		
 	}
 	public function request() {
 	
 		
 	}
 	public function __destruct() {
-		$this->close_curl();
+		curl_close($this->curl);			// 关闭cURL
 	}
 }
 ?>
