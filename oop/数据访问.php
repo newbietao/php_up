@@ -62,10 +62,11 @@ class Child extends Parents {
      * self 关键字
      * 访问内部属性、方法
      */
+    const Pi = 3.14;
     public static $id = 12;
     public static function getId() {
         // 访问内部静态属性
-        echo self::$id,"\n";
+        echo self::$id,self::Pi,"\n";
     }
     public static function changeId($id) {
         self::$id = $id;
