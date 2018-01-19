@@ -43,7 +43,26 @@ class Child extends Parents {
 
     }
 
+    /**
+     * $this 关键字
+     * @1 能访问内部的公有、私有、受保护属性
+     * @2 能访问内部的公有、私有、受保护方法
+     */
+    public $home = "liaoning";
+    public function changeHome($home) {
+        // $this 访问内部属性
+        $this->home = $home;
+        // $this 访问内部方法
+        $this->getHome();
+    }
+    public function getHome() {
+        echo "hello $this->home \n";
+    }
+
 
 
 }
 $test = new Child();
+$test->getHome();
+$test->changeHome("beijing");
+$test->getHome();
