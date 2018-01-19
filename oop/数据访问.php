@@ -58,6 +58,20 @@ class Child extends Parents {
     public function getHome() {
         echo "hello $this->home \n";
     }
+    /**
+     * self 关键字
+     * 访问内部属性、方法
+     */
+    public static $id = 12;
+    public static function getId() {
+        // 访问内部静态属性
+        echo self::$id,"\n";
+    }
+    public static function changeId($id) {
+        self::$id = $id;
+        // 访问内部静态方法
+        self::getId();
+    }
 
 
 
@@ -66,3 +80,6 @@ $test = new Child();
 $test->getHome();
 $test->changeHome("beijing");
 $test->getHome();
+Child::getId();
+Child::changeId(23);
+
