@@ -17,9 +17,24 @@ echo "\n";
 
 // 数组元素的替换\插入\删除
 $strarr = array(
-	str
+	"str1" => "AAAAA",
+	"str2" => "BBBBB"
+);
+$replace = array(
+	"rep1" => "BBB",
+	"rep2" => "AAA"
+);
+$start = array(
+	"start1" => 1,
+	"start2" => 2
+);
+$len = array(
+	"len" => 2,
+	"len2" => 3
 
 );
+var_dump($strarr);
+var_dump(substr_replace($strarr,$replace,$start,$len));
 
 
 
